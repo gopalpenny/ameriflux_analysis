@@ -7,38 +7,41 @@
 # 5. Plot the Budyko metric
 # 6. Other plotting functions, including timeseries and code for comparing different estimates of EP
 
-setwd("C:/Users/Gopal/Dropbox/Berkeley/Research/MyResearch/2014UrbanBudyko/R_code")
-
 library(lubridate)
 library(chron)
 library(ggplot2)
 library(data.table)
-sourceme("plotobj")
+source("read_ameriflux.R")
+source("../../r_functions/plotobj.R")
 
 ### 1 INPUT FLUX TOWER DATA
 
 # Lodz, Poland
-dir <- file.path(.udir,"Dropbox/Berkeley/Research/MyResearch/2014UrbanBudyko/ET_data/Flux_sites/Lodz")
-filename <- "LO02_KCL60.txt" #2001: LO01, 2002: LO02
-file <- file.path(dir,filename)
-data.source <- "KCL"
-tag <- "baseline"
-loc <- "lodz"
-
+L2.path <- file.path("../../../Ameriflux/L2/")
 # Ameriflux sites: "bartlett" "chestnut" "dukeforest" "kendall" "meadrainfed" "ncloblolly" "santarita" "tonzi"
-# loc <- "chestnut"
-# i <- 3
-# loc <- "santarita"
-# i <- 5
+loc <- "chestnut"
+i <- 3
+loc <- "santarita"
+i <- 5
 # data.source <- "AMR"
 # tag <- "baseline"
 
 #### READ IN FLUX TOWER DATA
-source("read.flux.data")
-if (data.source == "KCL") {flux <- read.KCL(file)}
-if (data.source == "AMR") {flux <- read.AMR(loc,i)}
+flux <- read.AMR(loc,L2.path,i)
 timestep <- median(difftime(flux$pdates[2:length(flux$pdates)],flux$pdates[1:(length(flux$pdates)-1)],units="hours"),
              na.rm=TRUE)
+
+
+p <- ggplot(NULL) + theme()
+p1 <- geom_point(data=flux,aes(Rg,Rn,col=sqrt(LE)))
+p2 <- geom_line(aes(0:1000,0:1000),col=cbPalette[3])
+p + p1 + p2
+
+
+p <- ggplot(NULL) + theme() + scale_y_continuous(limits=c(0,5))
+p1 <- geom_point(data=flux,aes(LE,Rg/Rn,col=sqrt(LE)))
+# p2 <- geom_line(aes(0:20,0:),col=cbPalette[3])
+p + p1
 
 #### MODIFICATION BASED ON TAG
 # flux$Ta <- flux$Ta - 5
