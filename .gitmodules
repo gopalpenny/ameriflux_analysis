@@ -1,0 +1,3 @@
+[submodule "r_functions"]
+	path = r_functions
+	url = git@github.com:gopalpenny/r_functions.git
