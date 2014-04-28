@@ -1,48 +1,38 @@
-# Urban Budyko Model
-# This code is used to:
-# 1. Input flux tower data
-# 2. Calculate EP from Priestley Taylor or Modified Priestley-Taylor
-# 3. Sum data to hourly, daily, and yearly values
-# 4. Calculate the aridity and Budyko metric (E and P required)
-# 5. Plot the Budyko metric
-# 6. Other plotting functions, including timeseries and code for comparing different estimates of EP
+# THIS CODE IS FOR TIME-AVERAGING AMERIFLUX DATA
 
 library(lubridate)
 library(chron)
 library(ggplot2)
 library(data.table)
-source("read_ameriflux.R")
+# source("read_ameriflux.R")
 source("../../r_functions/plotobj.R")
 
-### 1 INPUT FLUX TOWER DATA
-output.dir.path <- "../../data/format"
+### INPUT AMERIFLUX AND MODIS NDVI DATA
+input.dir.path <- "../../data/format"
+flux.data <- read.table(file.path(input.dir.path,"ameriflux_selected_data.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
+flux.data$Date <- as.Date(strptime(flux.data$pdates,format="%Y-%m-%d"))
+flux.data$modis_date <- rep(as.Date(NA),dim(flux.data)[1])
+modis.ndvi <- read.table(file.path(input.dir.path,"MODIS_NDVI.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
+modis.ndvi$Date <- as.Date(strptime(modis.ndvi$Date,"%Y-%m-%d"))
 
-# Lodz, Poland
-L2.path <- file.path("../../../Ameriflux/L2/")
-# Ameriflux sites: "bartlett" "chestnut" "dukeforest" "kendall" "meadrainfed" "ncloblolly" "santarita" "tonzi"
-locations <- c("bartlett","chestnut","dukeforest","kendall","meadrainfed","ncloblolly","santarita","tonzi")
-# loc <- "chestnut"
-i <- 3
-loc <- "santarita"
-i <- 5
-# data.source <- "AMR"
-# tag <- "baseline"
 
-#### READ IN FLUX TOWER DATA
-flux.all <- NULL
-for (loc in locations) {
-  flux <- read.AMR(loc,L2.path,i)
-  flux$site <- rep(loc,dim(flux)[1])
-  flux.all <- rbind(flux.all,flux)
-}
+class(flux.data$pdates)
+
 
 #### average the data to 16-day periods
-
-
-write.table(flux.all,file.path(output.dir.path,"ameriflux_selected_data.csv"),sep=",",row.names=FALSE)
-
-# ggplot(flux.all) + theme() +  geom_point(aes(Rg,Rn,col=sqrt(LE)),alpha=0.25) + ggtitle("Net Radiation vs Global Shortwave Radiation") + facet_wrap(~ site)
+for (i in 1:dim(modis.ndvi)[1]) {
+  #   i <- 89
+  startdate <- modis.ndvi$Date[i]
+  enddate <- startdate + 16
+  ind <- which(flux.data$Date >= startdate & flux.data$Date < enddate & modis.ndvi$site[i] == flux.data$site)
+  flux.data$modis_date[ind] <- as.Date(modis.ndvi$Date[i])
+}
 # 
-# ggplot(flux.all) + theme() +  geom_point(aes(LE,H,col=Rn)) + ggtitle("Sensible vs Latent Heat") + facet_wrap(~ site)
-# ggplot(flux.all) + theme() +  geom_point(aes(Rn,H/LE,col=Ta),alpha=0.25) + ggtitle("Sensible vs Latent Heat") + facet_wrap(~ site) +
-#   scale_y_continuous(limits=c(0,10))
+# ggplot(flux.data,aes(Date,LE,col=site)) + geom_point()
+# 
+# table(flux.data$site)
+# table(modis.ndvi$site)
+# 
+# table(ind)
+# 
+# table(!is.na(flux.data$modis_date))

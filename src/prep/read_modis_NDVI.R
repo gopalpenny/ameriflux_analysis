@@ -1,18 +1,21 @@
-MODIS.processing <- function() {
-  
-}
+# This script is used to prep MODIS NDVI data, extracting the NDVI at the flux tower pixel
+# for each 16 day period
+# MODIS.processing <- function() {
+#   
+# }
 
 modis.amerflux.path <- "../../../Ameriflux/MODIS_data"
 output.dir.path <- "../../data/format"
 
 modis.meta <- NULL
-modis.meta <- rbind(modis.meta,c("santarita","MOD13Q1.fn_usazsant.txt","X379"))
-modis.meta <- rbind(modis.meta,c("mead_rainfed","MOD13Q1.fn_usmeadrf.txt","X380"))
-modis.meta <- rbind(modis.meta,c("nc_loblolly","MOD13Q1.fn_usnclobl.txt","X406"))
-modis.meta <- rbind(modis.meta,c("tonzi","MOD13Q1.fn_ustonzir.txt","X352"))
+modis.meta <- rbind(modis.meta,c("bartlett","MOD13Q1.fn_usnhbart.txt","X349"))
 modis.meta <- rbind(modis.meta,c("chestnut","MOD13Q1.fn_uschridg.txt","X379"))
-modis.meta <- rbind(modis.meta,c("duke","MOD13Q1.fn_usdukehd.txt","X349"))
+modis.meta <- rbind(modis.meta,c("dukeforest","MOD13Q1.fn_usdukehd.txt","X349"))
 modis.meta <- rbind(modis.meta,c("kendall","MOD13Q1.fn_usazkend.txt","X407"))
+modis.meta <- rbind(modis.meta,c("meadrainfed","MOD13Q1.fn_usmeadrf.txt","X380"))
+modis.meta <- rbind(modis.meta,c("ncloblolly","MOD13Q1.fn_usnclobl.txt","X406"))
+modis.meta <- rbind(modis.meta,c("santarita","MOD13Q1.fn_usazsant.txt","X379"))
+modis.meta <- rbind(modis.meta,c("tonzi","MOD13Q1.fn_ustonzir.txt","X352"))
 
 modis.ndvi <- NULL
 for (i in 1:dim(modis.meta)[1]) {
@@ -36,7 +39,4 @@ for (i in 1:dim(modis.meta)[1]) {
 
 write.table(modis.ndvi,file.path(output.dir.path,"MODIS_NDVI.csv"),sep=",",col.names=TRUE,row.names=FALSE)
 
-ggplot(modis.ndvi,aes(Date,NDVI,col=site)) + geom_point(size=3) + geom_line() + ggtitle("NDVI at Ameriflux Sites")
-
-
-merged <- merge(modis.ndvi,modis.site.ndvi,by="dates")
+# ggplot(modis.ndvi,aes(Date,NDVI,col=site)) + geom_point(size=3) + geom_line() + ggtitle("NDVI at Ameriflux Sites")
