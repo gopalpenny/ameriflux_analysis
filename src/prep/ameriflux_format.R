@@ -1,11 +1,4 @@
-# Urban Budyko Model
-# This code is used to:
-# 1. Input flux tower data
-# 2. Calculate EP from Priestley Taylor or Modified Priestley-Taylor
-# 3. Sum data to hourly, daily, and yearly values
-# 4. Calculate the aridity and Budyko metric (E and P required)
-# 5. Plot the Budyko metric
-# 6. Other plotting functions, including timeseries and code for comparing different estimates of EP
+#
 
 library(lubridate)
 library(chron)
@@ -16,15 +9,16 @@ source("../../r_functions/plotobj.R")
 
 ### 1 INPUT FLUX TOWER DATA
 output.dir.path <- "../../data/format"
+input.dir.path <- output.dir.path
 
 # Lodz, Poland
 L2.path <- file.path("../../../Ameriflux/L2/")
 # Ameriflux sites: "bartlett" "chestnut" "dukeforest" "kendall" "meadrainfed" "ncloblolly" "santarita" "tonzi"
 locations <- c("bartlett","chestnut","dukeforest","kendall","meadrainfed","ncloblolly","santarita","tonzi")
 # loc <- "chestnut"
-i <- 3
-loc <- "santarita"
-i <- 5
+# i <- 3
+# loc <- "santarita"
+# i <- 5
 # data.source <- "AMR"
 # tag <- "baseline"
 
@@ -36,8 +30,21 @@ for (loc in locations) {
   flux.all <- rbind(flux.all,flux)
 }
 
-#### average the data to 16-day periods
+###### add modis date to each line
+modis.ndvi <- read.table(file.path(input.dir.path,"MODIS_NDVI.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
+modis.ndvi$Date <- as.Date(strptime(modis.ndvi$Date,"%Y-%m-%d"))
 
+flux.all$modis_date <- rep(as.Date(NA),dim(flux.all)[1])
+flux.all$NDVI <- rep(NA,dim(flux.all)[1])
+for (i in 1:dim(modis.ndvi)[1]) {
+  #   i <- 89
+  startdate <- modis.ndvi$Date[i]
+  enddate <- startdate + 16
+  ind <- which(flux.all$Date >= startdate & flux.all$Date < enddate & modis.ndvi$site[i] == flux.all$site)
+  flux.all$modis_date[ind] <- as.Date(modis.ndvi$Date[i])
+  flux.all$NDVI[ind] <- modis.ndvi$NDVI[i]
+}
+#####
 
 write.table(flux.all,file.path(output.dir.path,"ameriflux_selected_data.csv"),sep=",",row.names=FALSE)
 
