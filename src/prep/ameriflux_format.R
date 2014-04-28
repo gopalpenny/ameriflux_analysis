@@ -31,7 +31,7 @@ i <- 5
 #### READ IN FLUX TOWER DATA
 flux.all <- NULL
 for (loc in locations) {
-  flux <- read.AMR(loc,L2.path,i)
+  flux <- read.AMR(loc,L2.path)
   flux$site <- rep(loc,dim(flux)[1])
   flux.all <- rbind(flux.all,flux)
 }
