@@ -38,9 +38,11 @@ flux.all <- rbind(flux.all,flux)
 # p <- ggplot(flux.all) + theme() + 
 #   geom_point(aes(Rg,Rn,col=site),alpha=0.5)
 # print(p)
-ggplot(flux.all) + theme() +  geom_point(aes(Rg,Rn,col=sqrt(LE)),alpha=0.25) + ggtitle("yeah") + facet_wrap(~ site)
+ggplot(flux.all) + theme() +  geom_point(aes(Rg,Rn,col=sqrt(LE)),alpha=0.25) + ggtitle("Net Radiation vs Global Shortwave Radiation") + facet_wrap(~ site)
 
-ggplot(flux.all) + theme() +  geom_point(aes(LE,H,col=site)) + ggtitle("yeah")
+ggplot(flux.all) + theme() +  geom_point(aes(LE,H,col=Rn)) + ggtitle("Sensible vs Latent Heat") + facet_wrap(~ site)
+ggplot(flux.all) + theme() +  geom_point(aes(Rn,H/LE,col=Ta),alpha=0.25) + ggtitle("Sensible vs Latent Heat") + facet_wrap(~ site) +
+  scale_y_continuous(limits=c(0,10))
 
 
 

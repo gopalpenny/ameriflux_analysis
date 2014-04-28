@@ -119,11 +119,12 @@ if (loc == "bartlett") { #Bartlett, NH
   dv.M <- as.character(minutes(cdates))
   dv.S <- as.character(seconds(cdates))
   
-  flux <- data.frame(Y=flux.data$YEAR, m=dv.m, d=dv.d, H=dv.H, M=dv.M,
+  flux <- data.frame(#cdates=cdates, Y=flux.data$YEAR, m=dv.m, d=dv.d, H=dv.H, M=dv.M,
                      Rn=flux.data$Rn, Rg=flux.data$Rg, LE=flux.data$LE, Prec=flux.data$PREC,
-                     Ta=flux.data$TA, press=flux.data$PRESS, WS=flux.data$WS,)
+                     Ta=flux.data$TA, press=flux.data$PRESS, WS=flux.data$WS,
+                     H=flux.data$H)
 
-  dtimes <- paste(flux$Y,"-",flux$m,"-",flux$d," ",flux$H,":",flux$M,":00",sep="")
+  dtimes <- paste(flux.data$YEAR,"-",dv.m,"-",dv.d," ",dv.H,":",dv.M,":00",sep="")
   flux$pdates <- ymd_hms(dtimes)
 
 
