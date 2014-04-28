@@ -33,6 +33,7 @@ for (loc in locations) {
 ###### add modis date to each line
 modis.ndvi <- read.table(file.path(input.dir.path,"MODIS_NDVI.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
 modis.ndvi$Date <- as.Date(strptime(modis.ndvi$Date,"%Y-%m-%d"))
+flux.all$Date <- as.Date(strptime(flux.all$pdates,format="%Y-%m-%d"))
 
 flux.all$modis_date <- rep(as.Date(NA),dim(flux.all)[1])
 flux.all$NDVI <- rep(NA,dim(flux.all)[1])
