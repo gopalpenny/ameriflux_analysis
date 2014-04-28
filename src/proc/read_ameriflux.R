@@ -121,7 +121,7 @@ if (loc == "bartlett") { #Bartlett, NH
   
   flux <- data.frame(Y=flux.data$YEAR, m=dv.m, d=dv.d, H=dv.H, M=dv.M,
                      Rn=flux.data$Rn, Rg=flux.data$Rg, LE=flux.data$LE, Prec=flux.data$PREC,
-                     Ta=flux.data$TA, press=flux.data$PRESS, WS=flux.data$WS)
+                     Ta=flux.data$TA, press=flux.data$PRESS, WS=flux.data$WS,)
 
   dtimes <- paste(flux$Y,"-",flux$m,"-",flux$d," ",flux$H,":",flux$M,":00",sep="")
   flux$pdates <- ymd_hms(dtimes)

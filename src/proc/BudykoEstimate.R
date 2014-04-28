@@ -19,7 +19,8 @@ source("../../r_functions/plotobj.R")
 # Lodz, Poland
 L2.path <- file.path("../../../Ameriflux/L2/")
 # Ameriflux sites: "bartlett" "chestnut" "dukeforest" "kendall" "meadrainfed" "ncloblolly" "santarita" "tonzi"
-loc <- "chestnut"
+locations <- c("bartlett","chestnut","dukeforest","kendall","meadrainfed","ncloblolly","santarita","tonzi")
+# loc <- "chestnut"
 i <- 3
 loc <- "santarita"
 i <- 5
@@ -27,19 +28,29 @@ i <- 5
 # tag <- "baseline"
 
 #### READ IN FLUX TOWER DATA
+flux.all <- NULL
+for (loc in locations) {
 flux <- read.AMR(loc,L2.path,i)
-timestep <- median(difftime(flux$pdates[2:length(flux$pdates)],flux$pdates[1:(length(flux$pdates)-1)],units="hours"),
-             na.rm=TRUE)
+flux$site <- rep(loc,dim(flux)[1])
+flux.all <- rbind(flux.all,flux)
+}
+
+# p <- ggplot(flux.all) + theme() + 
+#   geom_point(aes(Rg,Rn,col=site),alpha=0.5)
+# print(p)
+ggplot(flux.all) + theme() +  geom_point(aes(Rg,Rn,col=sqrt(LE)),alpha=0.25) + ggtitle("yeah") + facet_wrap(~ site)
+
+ggplot(flux.all) + theme() +  geom_point(aes(LE,H,col=site)) + ggtitle("yeah")
 
 
-p <- ggplot(NULL) + theme()
-p1 <- geom_point(data=flux,aes(Rg,Rn,col=sqrt(LE)))
+
+
 p2 <- geom_line(aes(0:1000,0:1000),col=cbPalette[3])
 p + p1 + p2
-
+p
 
 p <- ggplot(NULL) + theme() + scale_y_continuous(limits=c(0,5))
-p1 <- geom_point(data=flux,aes(LE,Rg/Rn,col=sqrt(LE)))
+p1 <- geom_point(data=flux,aes(LE,Rg/Rn,col=sqrt(LE),))
 # p2 <- geom_line(aes(0:20,0:),col=cbPalette[3])
 p + p1
 
