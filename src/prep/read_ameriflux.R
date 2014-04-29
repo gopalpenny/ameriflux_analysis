@@ -1,9 +1,13 @@
 #### READ DATA FROM AMERIFLUX L2
+
+# if (0) {
+# l2.path <- "../../../Ameriflux/L2"
+# site.name <- "Chestnut_Ridge"
+# l2.site.path <- file.path(l2.path,site.name)
+# }
+
 read.l2.ameriflux.site <- function(l2.site.path,years=0,print.years=FALSE) {
   
-  l2.path <- "../../../Ameriflux/L2"
-  site.name <- "Chestnut_Ridge"
-  l2.site.path <- file.path(l2.path,site.name)
   site.dirs <- system(paste("ls",l2.site.path),intern=TRUE)
   if (max(site.dirs == "gap_filled") == 1) {
     data.dir.path <- file.path(l2.site.path,"gap_filled")
