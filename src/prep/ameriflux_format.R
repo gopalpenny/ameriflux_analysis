@@ -1,5 +1,12 @@
 #
 
+# output.dir.path <- "../../data/format"
+# locations <- c("Bartlett","Chestnut","Duke_Forest_H","Kendall","Mead_R","North_Carolina_Loblolly_P","Santa_Rita_M","Tonzi")
+# L2.path <- "../../../Ameriflux/L2"
+# sites <- system(paste("ls",L2.path),intern=TRUE)
+# selected.sites <- sites[pmatch(locations,sites)]
+# write.table(data.frame(sites=selected.sites),file.path(output.dir.path,"selected_sites.txt"),row.names=FALSE)
+
 library(lubridate)
 library(chron)
 library(ggplot2)
@@ -8,26 +15,20 @@ source("read_ameriflux.R")
 source("../../r_functions/plotobj.R")
 
 ### 1 INPUT FLUX TOWER DATA
-output.dir.path <- "../../data/format"
-input.dir.path <- output.dir.path
 
-# Lodz, Poland
-L2.path <- file.path("../../../Ameriflux/L2/")
-# Ameriflux sites: "bartlett" "chestnut" "dukeforest" "kendall" "meadrainfed" "ncloblolly" "santarita" "tonzi"
-locations <- c("bartlett","chestnut","dukeforest","kendall","meadrainfed","ncloblolly","santarita","tonzi")
-# loc <- "chestnut"
-# i <- 3
-# loc <- "santarita"
-# i <- 5
-# data.source <- "AMR"
-# tag <- "baseline"
+L2.path <- "../../../Ameriflux/L2"
+sel.sites <- read.table("../../data/format/selected_sites.txt",header=TRUE,stringsAsFactors=FALSE)[,1]
 
 #### READ IN FLUX TOWER DATA
-flux.all <- NULL
-for (loc in locations) {
-  flux <- read.AMR(loc,L2.path)
+flux.daytime <- NULL
+for (site in sel.sites) {
+  flux <- read.l2.ameriflux.site(file.path(L2.path,site))
   flux$site <- rep(loc,dim(flux)[1])
-  flux.all <- rbind(flux.all,flux)
+  
+  dt.flux <- data.table(flux)
+  flux.daytime <- as.data.frame(dt.flux[Rn > 0,])
+  
+  flux.all.daytime <- rbind(flux.all.daytime,flux)
 }
 
 ###### add modis date to each line
