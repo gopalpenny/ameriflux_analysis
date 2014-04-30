@@ -21,7 +21,10 @@ ggplot(daytime[daytime$DOY %in% 120:235,],aes(Rg,Rn,col=site.name)) + geom_point
 ggplot(daytime[daytime$DOY %in% 120:235 & daytime$site.name=="Kendall_Grassland",],aes(Rg,Rn,col=SWC1)) + geom_point() + facet_wrap(~ site.name)
 
 # Rn / Rg vs SWC1  ##### this one is good!
-ggplot(daytime[daytime$DOY %in% 135:235,],aes(SWC1,Rn/Rg,col=DOY)) + geom_point() + facet_wrap(~ site.name) + scale_y_continuous(limits=c(0,1),breaks=seq(0,1,by=0.2))
+ggplot(daytime[daytime$DOY %in% 135:235,],aes(SWC1,Rn/Rg,col=site.name,alpha=DOY)) + geom_point() + scale_y_continuous(limits=c(0,1),breaks=seq(0,1,by=0.2)) + facet_wrap(~ site.name)
+ggplot(daytime[daytime$DOY %in% 135:235,],aes(SWC1,Rn/Rg,col=site.name)) + geom_point() + scale_y_continuous(limits=c(0.4,0.9),breaks=seq(0.4,0.9,by=0.1))
+ggplot(daytime[daytime$DOY %in% 135:235,],aes(SWC1,Rn/Rg,col=Rg)) + geom_point() + scale_y_continuous(limits=c(0,1),breaks=seq(0,1,by=0.2)) + facet_wrap(~ site.name)
+
 
 
 ggplot(flux.daily,aes(DATE,FG)) + geom_point()
