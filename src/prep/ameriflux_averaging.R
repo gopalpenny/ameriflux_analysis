@@ -13,6 +13,7 @@ source("../../r_functions/plotobj.R")
 input.dir.path <- "../../data/format"
 output.dir.path <- input.dir.path
 flux.data <- read.table(file.path(input.dir.path,"ameriflux_selected_data.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
+flux.data$Date <- as.Date(strptime(flux.data$pdates,format="%Y-%m-%d"))
 flux.data$modis_date <- rep(as.Date(NA),dim(flux.data)[1])
 modis.ndvi <- read.table(file.path(input.dir.path,"MODIS_NDVI.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
 modis.ndvi$Date <- as.Date(strptime(modis.ndvi$Date,"%Y-%m-%d"))
