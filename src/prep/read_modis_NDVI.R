@@ -5,31 +5,24 @@
 # }
 
 modis.amerflux.path <- "../../../Ameriflux/MODIS_data"
+format.path <- "../../data/format"
 output.dir.path <- "../../data/format"
 
-modis.meta <- NULL
-modis.meta <- rbind(modis.meta,c("bartlett","MOD13Q1.fn_usnhbart.txt","X349"))
-modis.meta <- rbind(modis.meta,c("chestnut","MOD13Q1.fn_uschridg.txt","X379"))
-modis.meta <- rbind(modis.meta,c("dukeforest","MOD13Q1.fn_usdukehd.txt","X349"))
-modis.meta <- rbind(modis.meta,c("kendall","MOD13Q1.fn_usazkend.txt","X407"))
-modis.meta <- rbind(modis.meta,c("meadrainfed","MOD13Q1.fn_usmeadrf.txt","X380"))
-modis.meta <- rbind(modis.meta,c("ncloblolly","MOD13Q1.fn_usnclobl.txt","X406"))
-modis.meta <- rbind(modis.meta,c("santarita","MOD13Q1.fn_usazsant.txt","X379"))
-modis.meta <- rbind(modis.meta,c("tonzi","MOD13Q1.fn_ustonzir.txt","X352"))
+modis.filenames <- read.table(file.path(format.path,"modis_filenames.csv"),stringsAsFactors=FALSE,sep=",")
 
 modis.ndvi <- NULL
-for (i in 1:dim(modis.meta)[1]) {
+for (i in 1:dim(modis.filenames)[1]) {
 #   i <- 2
-  modis.data <- read.table(file.path(modis.amerflux.path,modis.meta[i,2]),sep=",",header=TRUE,stringsAsFactors=FALSE)
+  modis.data <- read.table(file.path(modis.amerflux.path,modis.filenames[i,2]),sep=",",header=TRUE,stringsAsFactors=FALSE)
   modis.data$Date <- strptime(substr(modis.data$Date,2,8),"%Y %j")
   row.ind <- which(modis.data$Band == "250m_16_days_NDVI")
-  col.ind <- c(which(names(modis.data)=="Date"),which(names(modis.data)==modis.meta[i,3]))
+  col.ind <- c(which(names(modis.data)=="Date"),which(names(modis.data)==modis.filenames[i,3]))
   modis.site.ndvi <- modis.data[row.ind,col.ind]
   ndvi.names <- names(modis.site.ndvi)
   ndvi.names[-1] <- "NDVI"
   #   modis.site.ndvi$ndvi <- modis.site.ndvi$ndvi/1e4
   names(modis.site.ndvi) <- ndvi.names
-  modis.site.ndvi$site <- rep(modis.meta[i,1],dim(modis.site.ndvi)[1])
+  modis.site.ndvi$site <- rep(modis.filenames[i,1],dim(modis.site.ndvi)[1])
   
   #   if (i == 1) {modis.ndvi <- modis.site.ndvi
   #   } else {

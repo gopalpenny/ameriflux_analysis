@@ -50,6 +50,7 @@ b2 <- p2 + stat_smooth(aes(DATE,LE/Rn),col=colors[6],size=1) + stat_smooth(aes(D
   scale_y_continuous(limits=c(0,1))
 c2 <- p2 + geom_point(aes(DATE,Rn/Rg,col=NEE))
 
+# p2 + geom_point(aes(DATE,Rn/Rg,col=NDVI))
 jpeg(file.path(figure.path,"Rn_Rg_radiation_partitioning.jpg"),width=1000,height=1000,quality=90)
 multiplot(a2,b2,c2,cols=1)
 dev.off()
@@ -87,4 +88,5 @@ jpeg(file.path(figure.path,"Rn_Rg_with_envelope.jpg"),width=1000,height=1400,qua
 multiplot(a3,b3,c3,d3,e3,cols=1)
 dev.off()
 
+##### FIGURE 4, NDVI
 
