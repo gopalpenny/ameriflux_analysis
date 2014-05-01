@@ -1,0 +1,13 @@
+This file explains basic data for ESPM 228 project and functions.
+MODIS_data contains modis files downloaded from modis website for each of the selected flux towers
+L2 contains all appropriate files for Ameriflux data
+
+src/prep/
+read_ameriflux.R: reads in all data from an Ameriflux site (L2 data)
+read_MODIS.R: converts MODIS files which contain gridded data to a single time series of NDVI using only the grid pixel containing the flux tower. Writes data to data/format/MODIS_NDVI.csv
+ameriflux_avg_daily.R: calls read_ameriflux.R, calculates daily averages for all sites, writes output to data/format/sel_ameriflux_daytime.csv (and daily)
+ameriflux_daily_add_modis.R: interpolates 16-day modis data to daily data, adds NDVI to ameriflux daily data, and exports data to data/format/sel_ameriflux_daytime_modis.csv (and daily)
+
+
+src/plot/
+ameriflux_RnRg_plots.R: uses data/format/sel_ameriflux_daytime_modis.csv, creates a set of plots that describe 2006 variations in energy fluxes and help describe the relationship between Rn and Rg throughout the year.
