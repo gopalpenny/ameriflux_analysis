@@ -18,7 +18,8 @@ source("../../r_functions/plotobj.R")
 
 L2.path <- "../../../Ameriflux/L2"
 sel.sites <- read.table("../../data/format/selected_sites.txt",header=TRUE,stringsAsFactors=FALSE)[,1]
-results.path <- "../../results/output"
+# results.path <- "../../results/output"
+format.path <- "../../data/format"
 
 #### READ IN FLUX TOWER DATA
 flux.all.daytime <- NULL
@@ -66,50 +67,6 @@ for (site in sel.sites) {
   flux.all.daily <- rbind(flux.all.daily,flux.daily)
 }
 
-if (modis.add == TRUE) {
-  
-  ###### add modis date to each line
-  input.dir.path <- "../../data/format"
-  modis.ndvi <- read.table(file.path(input.dir.path,"MODIS_NDVI.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
-  modis.ndvi$Date <- as.Date(strptime(modis.ndvi$Date,"%Y-%m-%d"))
-  #   flux.all$Date <- as.Date(strptime(flux.all$pdates,format="%Y-%m-%d"))
-  
-  flux.all.daily$modis_date <- rep(as.Date(NA),dim(flux.all.daily)[1])
-  flux.all.daily$NDVI <- rep(NA,dim(flux.all.daily)[1])
-  for (site in sel.sites$sites) {
-    site <- sel.sites$sites[1]
-    modis.ndvi.site <- modis.ndvi[which(modis.ndvi$site==site),]
-    modis.ndvi.daily <- NULL
-    
-    for (i in 1:dim(modis.ndvi.daily)[1]) {
-      new.period <- seq(modis.ndvi.daily$)
-      modis.ndvi.daily <- 
-    
-    
-    ind.daily <- which(flux.all.daily$site.name == site)
-    flux.daily.site <- flux.all.daily[ind.daily]
-    #     ind.daytime <- which(flux.all.daytime$site.name == site)
-  for (i in 1:dim(modis.ndvi)[1]) {
-    #   i <- 89
-    startdate <- modis.ndvi$Date[i]
-    enddate <- startdate + 16
-    ind <- which(flux.all.daily$DATE %in% seq(startdate,enddate,by=1) & modis.ndvi$site.name[i] == flux.all.daily$site.name)
-    flux.all.daily$modis_date[ind] <- as.Date(modis.ndvi$Date[i])
-    flux.all.daily$NDVI[ind] <- modis.ndvi$NDVI[i]
-  }
-  }
-  
-  flux.all.daytime
-  #####
-  
-}
+write.table(flux.all.daily,file.path(format.path,"sel_ameriflux_daily.csv"),sep=",",row.names=FALSE)
+write.table(flux.all.daytime,file.path(format.path,"sel_ameriflux_daytime.csv"),sep=",",row.names=FALSE)
 
-
-write.table(flux.all.daily,file.path(results.path,"sel_ameriflux_daily.csv"),sep=",",row.names=FALSE)
-write.table(flux.all.daytime,file.path(results.path,"sel_ameriflux_daytime.csv"),sep=",",row.names=FALSE)
-
-# ggplot(flux.all) + theme() +  geom_point(aes(Rg,Rn,col=sqrt(LE)),alpha=0.25) + ggtitle("Net Radiation vs Global Shortwave Radiation") + facet_wrap(~ site.name)
-# 
-# ggplot(flux.all) + theme() +  geom_point(aes(LE,H,col=Rn)) + ggtitle("Sensible vs Latent Heat") + facet_wrap(~ site.name)
-# ggplot(flux.all) + theme() +  geom_point(aes(Rn,H/LE,col=Ta),alpha=0.25) + ggtitle("Sensible vs Latent Heat") + facet_wrap(~ site.name) +
-#   scale_y_continuous(limits=c(0,10))

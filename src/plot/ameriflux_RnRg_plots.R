@@ -8,7 +8,6 @@ source("../../r_functions/plotobj.R")
 colors <- cbPalette
 
 format.path <- "../../data/format"
-results.path <- "../../results/output"
 figure.path <- "../../results/fig"
 sel.sites <- read.table(file.path(format.path,"selected_sites.txt"),header=TRUE,sep=",",stringsAsFactors=FALSE)
 sites.cross <- sel.sites[c(2,4,5,6),]
@@ -16,12 +15,12 @@ sites.cross <- sel.sites[c(2,4,5,6),]
 
 #### READ DATA
 # read daily data
-daily.path <- file.path(results.path,"sel_ameriflux_daily.csv")
+daily.path <- file.path(format.path,"sel_ameriflux_daily_modis.csv")
 daily <- read.table(daily.path,sep=",",header=TRUE,stringsAsFactors=FALSE)
 daily$DATE <- as.Date(strptime(daily$DATE,"%Y-%m-%d"))
 
 # read daytime data
-daytime.path <- file.path(results.path,"sel_ameriflux_daytime.csv")
+daytime.path <- file.path(format.path,"sel_ameriflux_daytime_modis.csv")
 daytime <- read.table(daytime.path,sep=",",header=TRUE,stringsAsFactors=FALSE)
 daytime$DATE <- as.Date(strptime(daytime$DATE,"%Y-%m-%d"))
 
@@ -35,9 +34,13 @@ b1 <- p1 + geom_point(aes(DATE,SWC1),col=colors[3])
 c1 <- p1 + geom_point(aes(DATE,LE),col=colors[6])
 d1 <- p1 + geom_point(aes(DATE,H),col=colors[7])
 e1 <- p1 + geom_point(aes(DATE,FG),col=colors[4])
-jpeg(file.path(figure.path,"Rn_Rg_annual_vars.jpg"),width=1000,height=1000,quality=90)
-multiplot(a1,b1,c1,d1,e1,cols=1)
-dev.off()
+if (!interactive()) {
+  jpeg(file.path(figure.path,"Rn_Rg_annual_vars.jpg"),width=1000,height=1000,quality=90)
+  multiplot(a1,b1,c1,d1,e1,cols=1)
+  dev.off()
+} else {
+  multiplot(a1,b1,c1,d1,e1,cols=1)
+}
 
 #### FIGURE 2, energy partitioning
 ind2 <- daytime$site.name %in% sites.cross & daytime$YEAR == 2006
@@ -51,9 +54,13 @@ b2 <- p2 + stat_smooth(aes(DATE,LE/Rn),col=colors[6],size=1) + stat_smooth(aes(D
 c2 <- p2 + geom_point(aes(DATE,Rn/Rg,col=NEE))
 
 # p2 + geom_point(aes(DATE,Rn/Rg,col=NDVI))
-jpeg(file.path(figure.path,"Rn_Rg_radiation_partitioning.jpg"),width=1000,height=1000,quality=90)
-multiplot(a2,b2,c2,cols=1)
-dev.off()
+if (!interactive()) {
+  jpeg(file.path(figure.path,"Rn_Rg_radiation_partitioning.jpg"),width=1000,height=1000,quality=90)
+  multiplot(a2,b2,c2,cols=1)
+  dev.off()
+} else {
+  multiplot(a2,b2,c2,cols=1)
+}
 
 
 # DETERMINE THE SCALING FACTOR
@@ -84,9 +91,14 @@ b3 <- p3ab + geom_point(aes(SWC1,Rn/Rg,col=site.name)) + scale_x_continuous("SWC
 c3 <- p3cd + geom_point(aes(SWC1,Rn/Rg,col=site.name,alpha=LE)) + scale_x_continuous("SWC (Jul-Sep)",limits=c(0,50)) + geom_line(data=Rn.Rg[Rn.Rg.ind3cd,],aes(SWC,Rn/Rg,col=site.name))
 d3 <- p3cd + geom_point(aes(Rg,Rn,col=site.name,alpha=LE)) + scale_x_continuous("Rg (Jul-Sep)",limits=c(0,700)) + geom_line(data=Rn.Rg[Rn.Rg.ind3cd,],aes(Rg,Rn,col=site.name))
 e3 <- p3cd + geom_point(aes(NEE,Rn/Rg,col=site.name,alpha=LE))
+
+if (!interactive()) {
 jpeg(file.path(figure.path,"Rn_Rg_with_envelope.jpg"),width=1000,height=1400,quality=90)
 multiplot(a3,b3,c3,d3,e3,cols=1)
 dev.off()
+} else {
+  multiplot(a3,b3,c3,d3,e3,cols=1)
+}
 
 ##### FIGURE 4, NDVI
 
