@@ -30,6 +30,8 @@ for (i in 1:dim(modis.filenames)[1]) {
   # }
 }
 
+modis.ndvi$NDVI <- modis.ndvi$NDVI/1e4
+
 write.table(modis.ndvi,file.path(output.dir.path,"MODIS_NDVI.csv"),sep=",",col.names=TRUE,row.names=FALSE)
 
 # ggplot(modis.ndvi,aes(DATE,NDVI,col=site)) + geom_point(size=3) + geom_line() + ggtitle("NDVI at Ameriflux Sites")
