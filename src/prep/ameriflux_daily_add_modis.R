@@ -26,7 +26,6 @@ modis.ndvi$Date <- as.Date(strptime(modis.ndvi$Date,"%Y-%m-%d"))
 modis.ndvi.daily <- NULL
 ##### LINEARLY INTERPOLATE 16-DAY NDVI DATA
 for (site in sel.sites$sites) {
-  site <- sel.sites$sites[1]
   modis.ndvi.site <- modis.ndvi[which(modis.ndvi$site==site),]
   startdate <- min(modis.ndvi.site$Date)
   enddate <- max(modis.ndvi.site$Date)
