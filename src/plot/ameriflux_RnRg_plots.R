@@ -4,7 +4,6 @@ require(ggplot2)
 require(scales)
 source("../../r_functions/multiplot.R")
 source("../../r_functions/plotobj.R")
-
 colors <- cbPalette
 
 format.path <- "../../data/format"
@@ -15,12 +14,12 @@ sites.cross <- sel.sites[c(2,4,5,6),]
 
 #### READ DATA
 # read daily data
-daily.path <- file.path(format.path,"sel_ameriflux_daily_modis.csv")
+daily.path <- file.path(format.path,"sel_ameriflux_daily.csv")
 daily <- read.table(daily.path,sep=",",header=TRUE,stringsAsFactors=FALSE)
 daily$DATE <- as.Date(strptime(daily$DATE,"%Y-%m-%d"))
 
 # read daytime data
-daytime.path <- file.path(format.path,"sel_ameriflux_daytime_modis.csv")
+daytime.path <- file.path(format.path,"sel_ameriflux_daytime.csv")
 daytime <- read.table(daytime.path,sep=",",header=TRUE,stringsAsFactors=FALSE)
 daytime$DATE <- as.Date(strptime(daytime$DATE,"%Y-%m-%d"))
 
