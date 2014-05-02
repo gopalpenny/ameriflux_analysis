@@ -1,6 +1,7 @@
 # ameriflux plot
 
-if (!interactive()) { save.to.file <- TRUE}
+if (!interactive()) { save.to.file <- TRUE} else {
+  save.to.file <- FALSE}
 
 require(ggplot2)
 require(scales)
