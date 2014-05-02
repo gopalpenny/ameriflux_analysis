@@ -1,5 +1,7 @@
 # ameriflux plot
 
+if (!interactive()) { save.to.file <- TRUE}
+
 require(ggplot2)
 require(scales)
 require(grid)
@@ -17,6 +19,8 @@ ggcolors <- gg_color_hue(8)
 format.path <- "../../data/format"
 figure.path <- "../../results/fig"
 sel.sites <- read.table(file.path(format.path,"selected_sites.txt"),header=TRUE,sep=",",stringsAsFactors=FALSE)
+sel.sites$sites <- c("Bartlett_Experimental_Forest","Chestnut","Duke","Kendall",
+                     "Mead","NC_Loblolly","Savanna","Tonzi"  )
 sites.cross <- sel.sites[c(2,4,5,6),]
 sites.veg.type <- data.frame(site.name=sel.sites$sites,VEGETATION=c("Forest","Forest","Forest","Grass","Crops","Forest","Shrubs","Mixed"))
 
@@ -30,11 +34,29 @@ daily$DATE <- as.Date(strptime(daily$DATE,"%Y-%m-%d"))
 daytime.path <- file.path(format.path,"sel_ameriflux_daytime_modis.csv")
 daytime <- read.table(daytime.path,sep=",",header=TRUE,stringsAsFactors=FALSE)
 daytime$DATE <- as.Date(strptime(daytime$DATE,"%Y-%m-%d"))
+
+daytime$site.name[daytime$site.name=="Chestnut_Ridge"] <- "Chestnut"
+daytime$site.name[daytime$site.name=="Duke_Forest_Hardwoods"] <- "Duke"
+daytime$site.name[daytime$site.name=="Kendall_Grassland"] <- "Kendall"
+daytime$site.name[daytime$site.name=="Mead_Rainfed"] <- "Mead"
+daytime$site.name[daytime$site.name=="North_Carolina_Loblolly_Pine"] <- "NC_Loblolly"
+daytime$site.name[daytime$site.name=="Santa_Rita_Mesquite_Savanna"] <- "Savanna"
+daytime$site.name[daytime$site.name=="Tonzi_Ranch"] <- "Tonzi"
+
 daytime <- merge(daytime,sites.veg.type,by="site.name",all.x=TRUE)
 
 ##### read modis timeseries
 modis.ndvi <- read.table(file.path(format.path,"MODIS_NDVI.csv"),header=TRUE,sep=",",stringsAsFactors=FALSE)
 modis.ndvi$DATE <- as.Date(strptime(modis.ndvi$DATE,"%Y-%m-%d"))
+
+
+modis.ndvi$site.name[modis.ndvi$site.name=="Chestnut_Ridge"] <- "Chestnut"
+modis.ndvi$site.name[modis.ndvi$site.name=="Duke_Forest_Hardwoods"] <- "Duke"
+modis.ndvi$site.name[modis.ndvi$site.name=="Kendall_Grassland"] <- "Kendall"
+modis.ndvi$site.name[modis.ndvi$site.name=="Mead_Rainfed"] <- "Mead"
+modis.ndvi$site.name[modis.ndvi$site.name=="North_Carolina_Loblolly_Pine"] <- "NC_Loblolly"
+modis.ndvi$site.name[modis.ndvi$site.name=="Santa_Rita_Mesquite_Savanna"] <- "Savanna"
+modis.ndvi$site.name[modis.ndvi$site.name=="Tonzi_Ranch"] <- "Tonzi"
 
 # #### FIGURE 1: 2006, 
 # ind1 <- daytime$site.name %in% sites.cross & strftime(daytime$DATE,"%Y") == "2006"
@@ -45,9 +67,9 @@ modis.ndvi$DATE <- as.Date(strptime(modis.ndvi$DATE,"%Y-%m-%d"))
 # d1 <- p1 + geom_point(aes(DATE,H),col=colors[7])
 # e1 <- p1 + geom_point(aes(DATE,FG),col=colors[4])
 # f1 <- p1 + geom_point(aes(DATE,NDVI/1e4)) + scale_y_continuous(limits=c(0,1))
-# if (!interactive()) {jpeg(file.path(figure.path,"Rn_Rg_annual_vars.jpg"),width=1000,height=1000,quality=90)}
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"Rn_Rg_annual_vars.jpg"),width=1000,height=1000,quality=90)}
 # multiplot(a1,b1,e1,f1,cols=1)
-# if (!interactive()) {dev.off()}
+# if (save.to.file==TRUE) {dev.off()}
 
 #### FIGURE 2, energy partitioning
 ind2 <- daytime$site.name %in% sites.cross & strftime(daytime$DATE,"%Y") == "2006"
@@ -61,9 +83,10 @@ c2 <- p2 + geom_point(aes(DATE,FG/Rn,col=NEE))
 d2 <- p2 + geom_point(aes(DATE,NDVI,col=site.name,shape=site.name,size=Rn)) + scale_color_manual(values=ggcolors[c(1,3,4,5)]) +
   scale_shape_manual(values=c(17,18,16,17)) + scale_size_continuous(range=c(1,4),breaks=c(100,500))
 
-if (!interactive()) {jpeg(file.path(figure.path,"G_fraction_annual_timeseries.jpg"),width=1000,height=1000,quality=90)}
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"G_fraction_annual_timeseries.jpg"),width=1000,height=1000,quality=90)}
+if (save.to.file==TRUE) {pdf(file.path(figure.path,"G_fraction_annual_timeseries.pdf"),width=7,height=7,pointsize=7)}
 multiplot(a2a,b2,c2,d2,cols=1)
-if (!interactive()) {dev.off()}
+if (save.to.file==TRUE) {dev.off()}
 
 #### FIGURE 3, G/Rn vs NDVI
 ind3ab <- strftime(daytime$DATE,"%Y") == "2006"
@@ -80,9 +103,13 @@ c3 <- ggplot(daytime[daytime$VEGETATION!="Forest",]) + geom_point(aes(NDVI,FG/Rn
   scale_y_continuous(limits=c(-0.1,0.4),breaks=seq(-0.2,0.5,by=0.1)) + scale_x_continuous(limits=c(0,1)) +
   scale_color_manual(values=ggcolors[c(3,4,6,7,8)]) + scale_size_continuous(breaks=c(100,300,500)) + scale_shape_manual(values=c(16,18,8,15)) + scale_alpha_continuous(range=c(0.2,1))
 
-if (!interactive()) {jpeg(file.path(figure.path,"G_fraction_vs_NDVI.jpg"),width=1000,height=1000,quality=90)}
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"G_fraction_vs_NDVI.jpg"),width=1000,height=1000,quality=90)}
+if (save.to.file==TRUE) {pdf(file.path(figure.path,"G_fraction_vs_NDVI.pdf"),width=7,height=7,pointsize=7)}
 print(a3)
-if (!interactive()) {dev.off()}
-if (!interactive()) {jpeg(file.path(figure.path,"G_fraction_vs_NDVI_veg_type.jpg"),width=1000,height=1000,quality=90)}
+if (save.to.file==TRUE) {dev.off()}
+
+#### FIGURE 4
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"G_fraction_vs_NDVI_veg_type.jpg"),width=1000,height=1000,quality=90)}
+if (save.to.file==TRUE) {pdf(file.path(figure.path,"G_fraction_vs_NDVI_veg_type.pdf"),width=7,height=7,pointsize=7)}
 layOut(list(b3,1,1),list(c3,2:3,1))
-if (!interactive()) {dev.off()}
+if (save.to.file==TRUE) {dev.off()}

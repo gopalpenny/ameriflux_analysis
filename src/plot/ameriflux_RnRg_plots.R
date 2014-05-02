@@ -1,5 +1,7 @@
 # ameriflux plot
 
+if (!interactive()) { save.to.file <- TRUE}
+
 require(ggplot2)
 require(scales)
 source("../../r_functions/multiplot.R")
@@ -9,6 +11,8 @@ colors <- cbPalette
 format.path <- "../../data/format"
 figure.path <- "../../results/fig"
 sel.sites <- read.table(file.path(format.path,"selected_sites.txt"),header=TRUE,sep=",",stringsAsFactors=FALSE)
+sel.sites$sites <- c("Bartlett_Experimental_Forest","Chestnut","Duke","Kendall",
+                     "Mead","NC_Loblolly","Savanna","Tonzi"  )
 sites.cross <- sel.sites[c(2,4,5,6),]
 
 
@@ -22,6 +26,13 @@ daily$DATE <- as.Date(strptime(daily$DATE,"%Y-%m-%d"))
 daytime.path <- file.path(format.path,"sel_ameriflux_daytime.csv")
 daytime <- read.table(daytime.path,sep=",",header=TRUE,stringsAsFactors=FALSE)
 daytime$DATE <- as.Date(strptime(daytime$DATE,"%Y-%m-%d"))
+daytime$site.name[daytime$site.name=="Chestnut_Ridge"] <- "Chestnut"
+daytime$site.name[daytime$site.name=="Duke_Forest_Hardwoods"] <- "Duke"
+daytime$site.name[daytime$site.name=="Kendall_Grassland"] <- "Kendall"
+daytime$site.name[daytime$site.name=="Mead_Rainfed"] <- "Mead"
+daytime$site.name[daytime$site.name=="North_Carolina_Loblolly_Pine"] <- "NC_Loblolly"
+daytime$site.name[daytime$site.name=="Santa_Rita_Mesquite_Savanna"] <- "Savanna"
+daytime$site.name[daytime$site.name=="Tonzi_Ranch"] <- "Tonzi"
 
 
 
@@ -33,13 +44,10 @@ b1 <- p1 + geom_point(aes(DATE,SWC1),col=colors[3])
 c1 <- p1 + geom_point(aes(DATE,LE),col=colors[6])
 d1 <- p1 + geom_point(aes(DATE,H),col=colors[7])
 e1 <- p1 + geom_point(aes(DATE,FG),col=colors[4])
-if (!interactive()) {
-  jpeg(file.path(figure.path,"Rn_Rg_annual_vars.jpg"),width=1000,height=1000,quality=90)
-  multiplot(a1,b1,c1,d1,e1,cols=1)
-  dev.off()
-} else {
-  multiplot(a1,b1,c1,d1,e1,cols=1)
-}
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"Rn_Rg_annual_vars.jpg"),width=1000,height=1000,quality=90)}
+if (save.to.file==TRUE) {pdf(file.path(figure.path,"Rn_Rg_annual_vars.pdf"),width=7,height=7,pointsize=7)}
+multiplot(a1,b1,c1,d1,e1,cols=1)
+if (save.to.file==TRUE) {dev.off()}
 
 #### FIGURE 2, energy partitioning
 ind2 <- daytime$site.name %in% sites.cross & daytime$YEAR == 2006
@@ -53,13 +61,10 @@ b2 <- p2 + stat_smooth(aes(DATE,LE/Rn),col=colors[6],size=1) + stat_smooth(aes(D
 c2 <- p2 + geom_point(aes(DATE,Rn/Rg,col=NEE))
 
 # p2 + geom_point(aes(DATE,Rn/Rg,col=NDVI))
-if (!interactive()) {
-  jpeg(file.path(figure.path,"Rn_Rg_radiation_partitioning.jpg"),width=1000,height=1000,quality=90)
-  multiplot(a2,b2,c2,cols=1)
-  dev.off()
-} else {
-  multiplot(a2,b2,c2,cols=1)
-}
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"Rn_Rg_radiation_partitioning.jpg"),width=1000,height=1000,quality=90)}
+if (save.to.file==TRUE) {pdf(file.path(figure.path,"Rn_Rg_radiation_partitioning.pdf"),width=7,height=8,pointsize=7)}
+multiplot(a2,b2,c2,cols=1)
+if (save.to.file==TRUE) {dev.off()}
 
 
 # DETERMINE THE SCALING FACTOR
@@ -91,13 +96,10 @@ c3 <- p3cd + geom_point(aes(SWC1,Rn/Rg,col=site.name,alpha=LE)) + scale_x_contin
 d3 <- p3cd + geom_point(aes(Rg,Rn,col=site.name,alpha=LE)) + scale_x_continuous("Rg (Jul-Sep)",limits=c(0,700)) + geom_line(data=Rn.Rg[Rn.Rg.ind3cd,],aes(Rg,Rn,col=site.name))
 e3 <- p3cd + geom_point(aes(NEE,Rn/Rg,col=site.name,alpha=LE))
 
-if (!interactive()) {
-jpeg(file.path(figure.path,"Rn_Rg_with_envelope.jpg"),width=1000,height=1400,quality=90)
+# if (save.to.file==TRUE) {jpeg(file.path(figure.path,"Rn_Rg_with_envelope.jpg"),width=1000,height=1400,quality=90)}
+if (save.to.file==TRUE) {pdf(file.path(figure.path,"Rn_Rg_with_envelope.pdf"),width=7,height=8,pointsize=7)}
 multiplot(a3,b3,c3,d3,e3,cols=1)
-dev.off()
-} else {
-  multiplot(a3,b3,c3,d3,e3,cols=1)
-}
+if (save.to.file==TRUE) {dev.off()}
 
 ##### FIGURE 4, NDVI
 
