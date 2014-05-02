@@ -16,41 +16,39 @@
 %SECTION 1
 \section{Introduction}
 
-Fluxes in the planetary boundary layer drive much of the environmental behavior throughout the globe.
-Both local and global water budgets are largely driven by gaseous transfer of water vapor into the atmosphere.
+Fluxes in the planetary boundary layer play an important role in climate and ecology at local and global scales.
+Water and energy balances largely driven by mass transfer gaseous water or sensible heat into the atmosphere.
 Estimating the trajectory of average global atmospheric carbon concentrations requires a detailed understanding of the local fluxes of different vegetation types in different climates.
-Measuring and modeling these fluxes are therefore critical to understanding the trajectory of our global climate.
-These processes have implications in global warming, water scarcity, and extreme storm events.
-Unfortunately we currently are unable to make good estimates of these fluxes everywhere on the planet, largely because collecting environmental data is often time-consuming and expensive.
+Measuring and modeling these fluxes are therefore critical to understanding what our planet will look like in the future.
+Unfortunately, we are currently unable to make good estimates of these fluxes everywhere on the planet, largely because collecting environmental data is often time-consuming and expensive.
 Fluxes through the planetary boundary layer are particularly expensive to measure.
 For instance, flux towers cost tens of thousands of dollars for equipment, and must be maintained over time to provide satisfactory data.
 Other methods for estimating surface fluxes do not measure the fluxes themselves, but rely on simplified models to estimate fluxes.
-The flux-gradient method includes the assumption that turbulent transport is diffusive, ignoring the effect of non-local transport due to large eddys, as well as counter-gradient transport due to turbulent structure and placement of sensors.
+The flux-gradient method includes the assumption that turbulent transport is diffusive, ignoring the effect of non-local transport and counter-gradient transport caused by turbulent structure and placement of sensors.
 Other methods are based on coupling biological with physical processes (Penman-Monteith) or manipulating and parameterizing simple physical relationships among micro-meteorological variables (Priestley-Taylor).
 In many cases, parameterizing these models is done by simple rule of thumb or other modifications that make the equation more tractable.
 In equations based on the energy balance, ground heat flux (G) is an unknown variable and often parameterized as one tenth of net radiation (Rn).
 In other cases, measuring net radiation is difficult if the canopy is tens of meters high and there is not a good method for installing a sensor above the canopy.
 Measuring global shortwave incoming radiation could be a reasonable substitute if there is a clear relationship between Rg and Rn.
-In this report, I review a number of variables affecting the energy balance and attempt to distinguish relationships between key sets of variables.
+In this report, I focus analysis on two micrometeorological relationships: (a) the relationship between net radiation and global shortwave incoming radiation, and (b) the relationship between the soil heat flux fraction (soil heat flux divided by net radiation) and normalized difference vegetation index (NDVI). As part of the process, I also review a number of variables affecting the energy balance and attempt to distinguish relationships between key sets of variables.
 
 \section{Methods}
 
-Data analysis being the key component of this work, data collection and aggregation was important.
-Ameriflux Level 2 data was downloaded from the Ameriflux network.
+To obtain an appropriate dataset for this analysis, Ameriflux Level 2 data was downloaded from the Ameriflux network.
 Analysis focused on a cross-section of sites with various climates and vegetation types.
 The primary sites included in this analysis were Chestnut Ridge (TN), Kendall Grassland (AZ), Mead Rainfed (NE), and NC Loblolly Pine (NC).
 Additional sites included Tonzi Ranch (CA), Duke Hardwood Forest (NC), and Santa Rita Mesquite Savanna (AZ).
-Each of these flux towers have been operated for a number of years, collecting a variety of data.
+Each of these flux towers have been operated for a number of years and have a good historical data record.
 Given the large variability at sub-daily timescales, data were averaged from sub-hourly timescales to the daily timescale.
-In order to avoid challenges with estimating nighttime fluxes (increase of the flux tower footprint, stable boundary layer, and variable turbulent structures), nighttime measurements were excluded from the averages.
-From here on, daily averages will refer to the daytime averages with nighttime values removed.
-Daytime was defined simply as periods where net radiation was greater than zero.
-This simplistic definition is valid most of the time, as net radiation is positive when the sun is shining.
+In order to avoid challenges associated with nighttime fluxes (increase of the flux tower footprint, stable boundary layer, and variable turbulent structures), nighttime measurements were excluded from the averages.
+From here on, daily flux values will refer to the daytime averages with nighttime values removed.
+I defined daytime by the period of the day when net radiation was greater than zero.
+This simplistic definition should be valid most of the time, as net radiation is generally positive when the sun is shining.
 
-Normalized Difference Vegetation Index was used as an index of green vegetation.
+Normalized Difference Vegetation Index was used as an index of vegetation.
 Because Ameriflux generally does not calculate this index, NDVI data were obtained from MODIS products.
 Ameriflux webpages link to MODIS products corresponding to their sites.
-Gridded timeseries of satellite data is provided online, and aggregated at 16-day intervals.
+Gridded timeseries of satellite data is provided online, aggregated at 16-day intervals.
 This data was downloaded and assimilated with the Ameriflux data.
 Additionally, NDVI was linearly interpolated between the 16-day averages to provide a daily estimate of NDVI at each of the sites.
 
@@ -61,14 +59,10 @@ Most of the analysis was done using ggplot in R, and visually interpreting plott
 \subsection{Net radiation and global shortwave radiation}
 
 For the majority of the analysis, four sites were selected to cover a range of vegetation types including deciduous forest (Chestnut Ridge, TN), grassland (Kendall Grassland, AZ), agricultural crops (Mead Rainfed, NE), and coniferous forest (Loblolly Pine, NC).
-In order to obtain a basic understanding of the many processes affecting energy and mass fluxes, I first plotted timeseries of energy fluxes and soil moisture for 2006 (Figure~\ref{fig:Rn_ts}) to see the trends throughout the year for a number of sites.
-These plots served as a sense check on the next pieces of analysis.
-They also illustrate some important relationships.
+In order to obtain a basic understanding of the many processes affecting energy and mass fluxes, I first plotted timeseries of energy fluxes and soil moisture for 2006 (Figure~\ref{fig:Rn_ts}) to see the trends throughout the year.
+These plots served as a sense check on the next pieces of analysis, as well as illustrate some important relationships.
 For instance, the grassland is generally more dry with higher sensible heat fluxes than the other land covers.
 The crops have a very high latent heat flux during growing season and low latent heat flux the rest of the year, while the forests have a gradual increase and decline of latent heat flux.
-While the maximum Rg is similar in at all sites through out the year, the grassland does not experience many days with low Rg suggesting fewer cloudy or rainy days.
-The soil heat flux is very low and constant in the forested sites, and higher and more variable at the other sites.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{../../results/fig/Rn_Rg_annual_vars.pdf}
@@ -76,31 +70,32 @@ The soil heat flux is very low and constant in the forested sites, and higher an
 \label{fig:Rn_ts}
 \end{figure}
 
-Figure~\ref{fig:R_part} shows energy fluxes normalized by net radiation, as well as the annual relationship Rn/Rg.The relationships among the energy fluxes are very apparent in this figure.
-The daily timeseries is plotted in the top portion, while a smoothed average time series is plotted in the middle portion.
+While the maximum Rg is similar in at all sites through out the year, the grassland does not experience many days with low Rg suggesting fewer cloudy or rainy days.
+The soil heat flux is very low and constant in the forested sites, and higher and more variable at the other sites.
+
+Figure~\ref{fig:R_part} shows energy fluxes normalized by net radiation, highlighting the relationships among the energy.
+Daily timeseries are plotted in the top portion, while a smoothed (averaged) timeseries are plotted in the middle portion.
 At all sites except the grassland, latent heat is greater than sensible heat during growing season.
-The soil heat flux is high at the non-forested sites (up to 25% of the energy budget), and nearly zero at the forested sites.
-As expected Rn/Rg peaks when the land surface is cool, because a lower surface temperature results in reduced outgoing longwave radiation and increased net radiation for a given Rg.
+The soil heat flux is high at the non-forested sites (up to 25\% of the energy budget), and nearly zero at the forested sites.
+As expected, Rn/Rg peaks when the land surface is cool, because a lower surface temperature results in reduced outgoing longwave radiation and increased net radiation for a given Rg.
 However, the seasonal peak of Rn/Rg occurs before the seasonal peak of latent heat, suggesting other factors are at play.
-In the bottom plot, net ecosystem exchange (NEE) is color coded into the plot (NEE was not available for Chestnut Ridge).
-Maximum Rn/Rg clearly coincides with the minimum (most negative) NEE, the time when plants are growing fastest.
+In the bottom plot of Figure~\ref{fig:R_part}, net ecosystem exchange (NEE) is color coded into a timeseries plot of Rn/Rg (NEE was not available for Chestnut Ridge).
+Maximum Rn/Rg clearly coincides with the maximum carbon exchange (most negative NEE), the time when plants are growing fastest.
 It is possible that photosynthesis contributes as an additional energy sink and is the factor that pushes Rn/Rg to its peak.
 
-In Figure~\ref{fig:env}, Rn is plotted over Rg for the full 2006 year, using daily (daytime) values.
-First, there is significant spread in Kendall Grasslands and Mead Rainfed agriculture, moreso than the forest sites.
+In Figure~\ref{fig:env}, Rn is plotted over Rg for the full 2006 year, using daily values.
+There is significant spread in the data at Kendall Grasslands and Mead Rainfed agriculture, moreso than the forest sites.
 This likely has to do with the forest sites retaining moisture and biomass throughout the year, while the other sites go through more drastic changes in soil moisture.
-The other point to note is that Rn/Rg is strongly correlated with soil moisture.
-Greater soil moisture likely leads to increased latent heat and soil heat fluxes, increasing Rn.
-To look at the relationship between Rn and Rg more closely, I plotted Rn/Rg versus surface water content (SWC1) using daily values from the growing season only, considerably reducing the variability in Rn/Rg at all sites.
+The other point to note is that Rn/Rg is strongly correlated with soil moisture at Kendall Grassland only, possibly because greater soil moisture leads to increased latent heat and soil heat fluxes, increasing Rn.
+To examine the relationship between Rn and Rg more closely, I re-plotted Rn/Rg versus surface water content (SWC1) using data from the growing season only, considerably reducing the variability in Rn/Rg at all sites.
 To obtain an upper bound estimate, I took the 0.8 quantile of Rn/Rg, and plotted this as the slope of a line through zero on Rn versus Rg plot, again containing only daytime fluxes from growing season.
 In this plot, the spread is largely eliminated.
 The slopes of the lines are, in order of increasing slope, 0.64 at Tonzi Ranch, 0.64 at Kendall Grassland, 0.70 at Santa Rita Mesquite Savanna, 0.71 at Mead Rainfed, 0.75 at Duke Hardwood Forest, 0.77 at Chestnut Ridge, and 0.82 at NC Loblolly Pine.
 The sites with more grass and shrubs have a smaller slope and the wetter, forested sites have a higher slope.
 I included latent heat in the color intensity of this plot.
 The points furthest from the line tend to have low latent heat, entailing a shift towards a maximum Rn/Rg ratio when LE is high.
-Lastly, I wanted to see if biomass production had an effect on the Rn/Rg relationship.
-The last plot in Figure~\ref{fig:env} shows a small negative correlation between Rn/Rg and NEE in the grassland and agriculture, but a small positive correlation in the forest.
-I have not been able to think of a mechanism to describe these relationships.
+Lastly, I plotted Rn/Rg versus NEE to see if biomass production had an effect on the Rn/Rg relationship.
+The last plot in Figure~\ref{fig:env} shows a small negative correlation between Rn/Rg and NEE in the grassland and agriculture, but a small positive correlation in the forest, and I have not been able to think of a mechanism to describe these relationships.
 
 
 \begin{figure}[H]
@@ -122,21 +117,23 @@ I have not been able to think of a mechanism to describe these relationships.
 \subsection{Soil heat flux fraction and NDVI}
 
 The soil heat fraction is of importance to common evapotranspiration models, which often require net radiation (Rn) and soil heat flux (G) to be parameterized.
-In cases where data for G is unavailable, it is parameterized as a fraction of Rn, typically 0.1 times Rn.
+In cases where data for G is unavailable, it is often parameterized as a fraction of Rn, typically 0.1 times Rn.
 While this allows a first-order estimate to be calculated, it wholly ignores any changes in G with respect to Rn.
 In order to understand the relationship between these two variables better, I created a series of figures to understand how these fluxes change through out the year, and how they change with respect to each other and other variables.
-While soil moisture and other variables change considerably throughout the year, soil heat flux fraction (G/Rn) is relatively constant.
+While soil moisture and other variables change considerably throughout the year, changes in soil heat flux fraction (G/Rn) is relatively small.
 In forested catchments, it stays nearly-constant and close to zero, while in Kendall Grasslands and Mead Rainfed sites it varies more.
-There appears to be a local minimum when net carbon exchange (NEE) is at a maximum (on the plot it appears negative) for the non-forested sites.
-This peak coincides with the maximum NDVI (please note that the maximums on the plot are offset due to the legen shifting the NDVI plot to the left.
+There appears to be a local minimum in soil heat flux fraction when net carbon exchange is at a maximum (most-negative NEE) for the non-forested sites.
+This peak coincides with the maximum NDVI (note that the maximums on the plots are offset due to the legend shifting the NDVI plot to the left.
 
-Further investigating the relationship betwen G/Rn and NDVI, I directly plotted the two against each other in Figure~\ref{fig:G_ndvi} using data from seven Ameriflux sites.
-Daytime fluxes were extracted for every 16-day period to reduce the number of points in the figure.
-There appears to be an upper envelope on the soil heat flux fraction which decreases with NDVI. In other words, as more lease collect sunlight, there is a small soil heat flux. Additionally, all the forested sites (shown in triangles) have a small soil heat flux fraction than the other sites. There are some negative fractions in this case, which mostly occur at very low net radiation, suggesting a winter value and a heat flux from the soil to the surface even during the day.
+Further investigating the relationship betwen G/Rn and NDVI, I directly plotted the two against each other in Figure~\ref{fig:G_ndvi} using data from the seven Ameriflux sites mentioned above.
+Daytime fluxes were extracted for every 16-day period to match the MODIS NDVI 16-day averages and and reduce the number of points in the figure.
+There appears to be an upper envelope on the soil heat flux fraction which decreases with NDVI.
+In other words, as more lease collect sunlight, there is a small soil heat flux.
+Additionally, all the forested sites (shown in triangles) have a small soil heat flux fraction than the other sites.
+There are some negative fractions in this case, which mostly occur at very low net radiation, suggesting these points occur in winter value and there is a heat flux from the soil to the surface even during the day.
 
-To separate the effects of vegetation type, I pulled all the forest sites and plotted them separately in Figure~\ref{fig:G_veg}, and the non-forest sites below.
-The forest sites clump just above zero.
-The soil heat flux fraction appears to be uncorrelated with NDVI, net radiation, and soil water content in forested sites.
+To separate the effects of vegetation type, I plotted separately the the forest sites and non-forest sites in Figure~\ref{fig:G_veg}.
+The forest sites clump just above zero and appears to be uncorrelated with NDVI, net radiation, or soil water content in forested sites.
 The other sites, spanning grassland, agriculture, shrubs (savanna), and mixed woody savanna exibit more complex behavior.
 All sites exhibit the upper envelop on G/Rn.
 Kendall grassland has low NDVI and low soil moisture throughout most of the year.
@@ -157,14 +154,14 @@ It would appear that there is a positive correlation when Rn is small, and a neg
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{../../results/fig/G_fraction_vs_NDVI.pdf}
-\caption{this is a caption}
+\caption{Soil heat flux fraction versus NDVI, plotted for seven Ameriflux sites: Chestnut Ridge (TN), Kendall Grassland (AZ), Mead Rainfed (NE), NC Loblolly Pine (NC), Tonzi Ranch (CA), Duke Hardwood Forest (NC), and Santa Rita Mesquite Savanna (AZ).}
 \label{fig:G_ndvi}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{../../results/fig/G_fraction_vs_NDVI_veg_type.pdf}
-\caption{this is a caption}
+\caption{Soil heat flux fraction versus NDVI, plotted for the same sites as Figure~\ref{fig:G_ndvi} but split into three forested sites and four non-forested sites.}
 \label{fig:G_veg}
 \end{figure}
 
@@ -172,16 +169,30 @@ It would appear that there is a positive correlation when Rn is small, and a neg
 \section{Discussion and suggested future work}
 
 This analysis highlighted a number of properties of the relationships between net radiation and global shortwave radiation, as well as between soil heat flux fraction and NDVI.
-Both relationships are characterized by an upper limit that changes with the independent variable.
-Net radiation and global shortwave radiation, for instance are positively correlated and Rn/Rg rarely exceeds a site-specific maximum value regardless of the absolute value of Rg.
+Both relationships are characterized by an upper envelope that changes with the independent variable (Rg and NDVI, respectively).
+Net radiation and global shortwave radiation are positively correlated and Rn/Rg rarely exceeds a site-specific maximum value regardless of the absolute value of Rg.
 The largest deviations from this line occur when latent heat is low, but there does not appear to be a uniform correlation between Rn/Rg and latent heat.
-The slopes of the envelope line is lowest at the grassland site and highest at the coniferous forest site.
+The slope of the envelope line is lowest at the grassland site and highest at the coniferous forest site.
 This makes sense given the low albedo of evergreen trees and high water availability at the NC Loblolly site.
 The grassland site, on the other hand, likely has higher albedo and less soil moisture, leading to increased reflection, surface heating, and more outgoing shortwave and longwave radiation.
 The net effect is a reduction in net radiation.
 
-Energy and water availability along with biomass play an important role in the fraction of net radiation transformed to soil heat flux. In areas that are dry with high radiation, there is less biomass, smaller latent heat fluxes, and often a greater soil heat flux fraction. In the forested sites that are wet and have high net radiation, the soil heat fluxes are very small. When comparing the soil heat flux fraction with NDVI, we observe an envelope on the upper limit of soil heat flux fraction that is inversely correlated with NDVI. This make sense because in some ways, NDVI is a proxy for net radiation, water availability, and biomass. The most interesting and perplexing piece of this plot to me is the upside-down "U" shape of the mead rainfed site. When NDVI is low, there is likely no biomass because the crops are not in season. Net radiation is also low, possibly due to reflection from snow or frost. As NDVI increases, there may be some increase in soil heat conductivity, or possibly non-productive plant matter that intercepts incoming radiation and converts it to sensible heat. At very high NDVI, the crops intercept incoming radiation and convert it to sensible or latent heat, resulting in a smaller soil heat flux fraction. Ignoring the agricultural area, there is a general decreasing trend in soil heat flux fraction with greater NDVI, likely entailing that a greater portion of energy is converted to latent heat or used for photosynthesis and carbon assimilation. In the forested sites, the soil heat flux fraction is small at all sites.
+Energy and water availability along with biomass play an important role in the fraction of net radiation transformed to soil heat flux.
+In areas that are dry with high radiation, there is less biomass, smaller latent heat fluxes, and often a greater soil heat flux fraction.
+In the forested sites that are wet and have high net radiation, the soil heat fluxes are very small.
+When comparing the soil heat flux fraction with NDVI, we observe an envelope on the upper limit of soil heat flux fraction that is inversely correlated with NDVI.
+This make sense because in some ways, NDVI is a proxy for net radiation, water availability, and biomass.
+The most interesting and perplexing piece of this plot to me is the upside-down "U" shape of the mead rainfed site.
+When NDVI is low, there is likely no biomass because the crops are not in season.
+Net radiation is also low, possibly due to reflection from snow or frost, and there could be some transfer of heat from deep soil to the surface.
+As NDVI increases, there may be some increase in soil heat conductivity, or possibly non-productive plant matter that intercepts incoming radiation and converts it to sensible heat.
+At very high NDVI, the crops intercept incoming radiation and convert it to sensible or latent heat, resulting in a smaller soil heat flux fraction.
+Ignoring the agricultural area, there is a general decreasing trend in soil heat flux fraction with greater NDVI, likely entailing that a greater portion of energy is converted to latent heat or used for photosynthesis and carbon assimilation.
+In the forested sites, the soil heat flux fraction is small at all sites.
 
-While much can be learned from the plots provided in this report, further investigation could be done to better understand the processes. The relationship between net radiation and global radiation was considered for the year 2006, but more years could be included. In the relationship between soil heat flux and NDVI, it would be helpful to time-average fluxes over 16-day period to match NDVI measurements. This would reduce daily variations in the fluxes and utilize more data instead of just days that coincide with 16-day period.
+While much can be learned from the plots provided in this report, further investigation could be done to better understand the processes discussed.
+The relationship between net radiation and global radiation was considered for the year 2006, but more years could be included.
+In the relationship between soil heat flux and NDVI, it would be helpful to time-average fluxes over 16-day period to match NDVI measurements.
+This would reduce daily variations in the fluxes and utilize more data instead of just days that coincide with 16-day period.
 
 \end{document}
