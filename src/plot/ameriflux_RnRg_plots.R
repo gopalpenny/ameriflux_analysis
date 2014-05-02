@@ -80,6 +80,7 @@ Rn.Rg1 <- cbind(Rn.Rg,data.frame(SWC=rep(0,dim(sel.sites)[1]),Rg=rep(0.01,dim(se
 Rn.Rg2 <- cbind(Rn.Rg,data.frame(SWC=rep(50,dim(sel.sites)[1]),Rg=rep(700,dim(sel.sites)[1])))
 Rn.Rg <- rbind(Rn.Rg1,Rn.Rg2)
 Rn.Rg$Rn <- Rn.Rg$Rg * Rn.Rg$factor
+print(Rn.Rg)
 
 
 #### FIGURE 3, Rn vs Rg
