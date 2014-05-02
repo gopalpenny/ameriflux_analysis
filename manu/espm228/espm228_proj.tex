@@ -13,15 +13,85 @@
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\Prob}{\mathrm{Pr}}
 
-For this problem set, you will use a data set of counts of recreational trips to a lake
-in the southern U.S. in the 1980s by 5,190 respondents. Let $X_i$ be the number of trips taken
-by respondent $i$. The data are in the file \texttt{Trips.csv} and the variable of interest is \texttt{trips},
-which is the number of trips that each respondent reports taking to the lake.
-
-
 %SECTION 1
 \section{Introduction}
 
+Fluxes in the planetary boundary layer drive much of the environmental behavior throughout the globe.
+Both local and global water budgets are largely driven by gaseous transfer of water vapor into the atmosphere.
+Estimating the trajectory of average global atmospheric carbon concentrations requires a detailed understanding of the local fluxes of different vegetation types in different climates.
+Measuring and modeling these fluxes are therefore critical to understanding the trajectory of our global climate.
+These processes have implications in global warming, water scarcity, and extreme storm events.
+Unfortunately we currently are unable to make good estimates of these fluxes everywhere on the planet, largely because collecting environmental data is often time-consuming and expensive.
+Fluxes through the planetary boundary layer are particularly expensive to measure.
+For instance, flux towers cost tens of thousands of dollars for equipment, and must be maintained over time to provide satisfactory data.
+Other methods for estimating surface fluxes do not measure the fluxes themselves, but rely on simplified models to estimate fluxes.
+The flux-gradient method includes the assumption that turbulent transport is diffusive, ignoring the effect of non-local transport due to large eddys, as well as counter-gradient transport due to turbulent structure and placement of sensors.
+Other methods are based on coupling biological with physical processes (Penman-Monteith) or manipulating and parameterizing simple physical relationships among micro-meteorological variables (Priestley-Taylor).
+In many cases, parameterizing these models is done by simple rule of thumb or other modifications that make the equation more tractable.
+In equations based on the energy balance, ground heat flux (G) is an unknown variable and often parameterized as one tenth of net radiation (Rn).
+In other cases, measuring net radiation is difficult if the canopy is tens of meters high and there is not a good method for installing a sensor above the canopy.
+Measuring global shortwave incoming radiation could be a reasonable substitute if there is a clear relationship between Rg and Rn.
+In this report, I review a number of variables affecting the energy balance and attempt to distinguish relationships between key sets of variables.
 
+\section{Methods}
+
+Data analysis being the key component of this work, data collection and aggregation was important.
+Ameriflux Level 2 data was downloaded from the Ameriflux network.
+Analysis focused on a cross-section of sites with various climates and vegetation types.
+The primary sites included in this analysis were Chestnut Ridge (TN), Kendall Grassland (AZ), Mead Rainfed (), and NC Loblolly Pine (NC).
+Additional sites included Tonzi Ranch (CA), Duke Hardwood Forest (NC), and Santa Rita Mesquite Savanna (AZ).
+Each of these flux towers have been operated for a number of years, collecting a variety of data.
+Given the large variability at sub-daily timescales, data were averaged from sub-hourly timescales to the daily timescale.
+In order to avoid challenges with estimating nighttime fluxes (increase of the flux tower footprint, stable boundary layer, and variable turbulent structures), nighttime measurements were excluded from the averages.
+From here on, daily averages will refer to the daytime averages with nighttime values removed.
+Daytime was defined simply as periods where net radiation was greater than zero.
+This simplistic definition is valid most of the time, as net radiation is positive when the sun is shining.
+
+Normalized Difference Vegetation Index was used as an index of green vegetation.
+Because Ameriflux generally does not calculate this index, NDVI data were obtained from MODIS products.
+Ameriflux webpages link to MODIS products corresponding to their sites.
+Gridded timeseries of satellite data is provided online, and aggregated at 16-day intervals.
+This data was downloaded and assimilated with the Ameriflux data.
+Additionally, NDVI was linearly interpolated between the 16-day averages to provide a daily estimate of NDVI at each of the sites.
+
+Most of the analysis was done using ggplot in R, and visually interpreting plotted data. I include and describe these plots in the results section.
+
+\section{Results}
+
+For the majority of the analysis, four sites were selected to cover a range of vegetation types including deciduous forest (Chestnut Ridge, TN), grassland (Kendall Grassland, AZ), agricultural crops (Mead Rainfed, XXXXXXXX), and coniferous forest (Loblolly Pine, NC).
+In order to obtain a basic understanding of the many processes affecting energy and mass fluxes, I first plotted timeseries of energy fluxes and soil moisture for 2006 (Figure 1) to see the trends throughout the year for a number of sites.
+These plots served as a sense check on the next pieces of analysis.
+They also illustrate some important relationships.
+For instance, the grassland is generally more dry with higher sensible heat fluxes than the other land covers.
+The crops have a very high latent heat flux during growing season and low latent heat flux the rest of the year, while the forests have a gradual increase and decline of latent heat flux.
+While the maximum Rg is similar in at all sites through out the year, the grassland does not experience many days with low Rg suggesting fewer cloudy or rainy days.
+The soil heat flux is very low and constant in the forested sites, and higher and more variable at the other sites.
+
+Figure 1. Daily timeseries of (a) net radiation, (b) surface water content, (c) latent heat, and (d) soil heat flux in 2006 at four Ameriflux sites.
+
+
+Figure 2. Shows energy fluxes normalized by net radiation, as well as the annual relationship Rn/Rg.The relationships among the energy fluxes are very apparent in this figure. The daily timeseries is plotted in the top portion, while a smoothed average time series is plotted in the middle portion. At all sites except the grassland, latent heat is greater than sensible heat during growing season. The soil heat flux is high at the non-forested sites (up to 25% of the energy budget), and nearly zero at the forested sites. As expected Rn/Rg peaks when the land surface is cool, because a lower surface temperature results in reduced outgoing longwave radiation and increased net radiation for a given Rg. However, the seasonal peak of Rn/Rg occurs before the seasonal peak of latent heat, suggesting other factors are at play. In the bottom plot, net ecosystem exchange (NEE) is color coded into the plot (NEE was not available for Chestnut Ridge). Maximum Rn/Rg clearly coincides with the minimum (most negative) NEE, the time when plants are growing fastest. It is possible that photosynthesis contributes as an additional energy sink and is the factor that pushes Rn/Rg to its peak.
+
+Figure 2. Normalized energy fluxes and Rn/Rg daily timeseries in 2006. (a) Normalized energy fluxes in 2006, (b) Normalized and smoothed energy fluxes in 2006, (c) Rn/Rg timeseries in 2006, with net ecosystem exchange (NEE) plotted in color. Rn/Rg generally reaches a maximum when NEE is greatest (most negative) due to plant carbon uptake.
+
+
+In Figure 3, Rn is plotted over Rg for the full 2006 year.
+Figure 3. Relationships between Rn, Rg, and SWC in the full year and growing season. (a) Rn vs Rg for 2006. (b) Rn/Rg vs soil water content in 2006. (c) Rn/Rg vs soil water content for the approximate growing season in 2006. The 0.8 quantile is plotted as an approximate envelope for this relationship. This value is the slope of the line in (d). (d) Rn vs Rg for approximate growing season in 2006, with the approximate envelope plotted as a line. The slope of the line is taken from (c).
+
+Figure 4. Timeseries variables illustrating relationships between vegetation and soil heat flux fraction in 2006 at four Ameriflux sites. (a) Daily energy balance fluxes including net radiation (yellow), latent heat (blue), sensible heat (orange), and soil heat flux (green). (b) Daily soil water content. (c) Daily soil heat flux fraction (soil heat flux divided by net radiation). (d) MODIS 16-day NDVI, with size and shape indicating net radiation and vegetation type, respective. Plotted for easy comparison with Figures X-XX.
+
+Figure 5
+
+
+
+
+Figure 6.
+
+
+Next steps:
+
+Make Rn vs Rg plots for multiple years.
+Time-average fluxes over 16-day period to match NDVI (reduce daily variations, utilize more data instead of just days that coincide with 16-day period).
+Note that the 16-day period was chosen to reduce the number of points in the figure which already overlap to some degree.
 
 \end{document}
