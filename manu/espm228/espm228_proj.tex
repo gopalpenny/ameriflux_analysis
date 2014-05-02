@@ -34,7 +34,7 @@ In this report, I focus analysis on two micrometeorological relationships: (a) t
 
 \section{Methods}
 
-To obtain an appropriate dataset for this analysis, Ameriflux Level 2 data was downloaded from the Ameriflux network.
+To obtain an appropriate dataset for this analysis, Ameriflux Level 2 data was downloaded from the Ameriflux network (http://ameriflux.lbl.gov).
 Analysis focused on a cross-section of sites with various climates and vegetation types.
 The primary sites included in this analysis were Chestnut Ridge (TN), Kendall Grassland (AZ), Mead Rainfed (NE), and NC Loblolly Pine (NC).
 Additional sites included Tonzi Ranch (CA), Duke Hardwood Forest (NC), and Santa Rita Mesquite Savanna (AZ).
@@ -48,20 +48,18 @@ This simplistic definition should be valid most of the time, as net radiation is
 Normalized Difference Vegetation Index was used as an index of vegetation.
 Because Ameriflux generally does not calculate this index, NDVI data were obtained from MODIS products.
 Ameriflux webpages link to MODIS products corresponding to their sites.
-Gridded timeseries of satellite data is provided online, aggregated at 16-day intervals.
+This service is hosted by Oak Ridge National Lab (http://daac.ornl.gov/), where gridded timeseries of MODIS data are provided, aggregated at 16-day intervals.
 This data was downloaded and assimilated with the Ameriflux data.
 Additionally, NDVI was linearly interpolated between the 16-day averages to provide a daily estimate of NDVI at each of the sites.
-
-Most of the analysis was done using ggplot in R, and visually interpreting plotted data. I include and describe these plots in the results section.
 
 \section{Results}
 
 \subsection{Net radiation and global shortwave radiation}
 
 For the majority of the analysis, four sites were selected to cover a range of vegetation types including deciduous forest (Chestnut Ridge, TN), grassland (Kendall Grassland, AZ), agricultural crops (Mead Rainfed, NE), and coniferous forest (Loblolly Pine, NC).
-In order to obtain a basic understanding of the many processes affecting energy and mass fluxes, I first plotted timeseries of energy fluxes and soil moisture for 2006 (Figure~\ref{fig:Rn_ts}) to see the trends throughout the year.
+To obtain a basic understanding of the many processes affecting energy and mass fluxes, I first plotted timeseries of energy fluxes and soil moisture for 2006 (Figure~\ref{fig:Rn_ts}) to see the trends throughout the year.
 These plots served as a sense check on the next pieces of analysis, as well as illustrate some important relationships.
-For instance, the grassland is generally more dry with higher sensible heat fluxes than the other land covers.
+For instance, the grassland is generally drier with higher sensible heat fluxes than other land covers.
 The crops have a very high latent heat flux during growing season and low latent heat flux the rest of the year, while the forests have a gradual increase and decline of latent heat flux.
 \begin{figure}[H]
 \centering
