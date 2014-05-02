@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.1)  1 MAY 2014 18:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.1)  1 MAY 2014 19:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -386,6 +386,14 @@ Package color Info: Driver file: pdftex.def on input line 130.
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
 ))
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count132
+\float@exts=\toks24
+\float@box=\box62
+\@float@everytoks=\toks25
+\@floatcapt=\box63
+)
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
 )
@@ -416,19 +424,19 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count132
+\scratchcounter=\count133
 \scratchdimen=\dimen134
-\scratchbox=\box62
-\nofMPsegments=\count133
-\nofMParguments=\count134
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count135
+\scratchbox=\box64
+\nofMPsegments=\count134
+\nofMParguments=\count135
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count136
 \MPscratchDim=\dimen135
-\MPnumerator=\count136
-\makeMPintoPDFobject=\count137
-\everyMPtoPDFconversion=\toks25
+\MPnumerator=\count137
+\makeMPintoPDFobject=\count138
+\everyMPtoPDFconversion=\toks27
 )
-\c@lstlisting=\count138
+\c@lstlisting=\count139
 LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 68
 .
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
@@ -464,40 +472,82 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 68.
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 17.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 17.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 17.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 18.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 23.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 17.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./espm228_proj.aux) ) 
-Here is how much of TeX's memory you used:
- 5431 strings out of 495028
- 74800 string characters out of 6181498
- 180983 words of memory out of 5000000
- 8505 multiletter control sequences out of 15000+600000
- 46924 words of font info for 83 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 44i,6n,41p,355b,229s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/us
-r/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/gopal/.texmf-var
-/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk></usr/share/texlive/texmf-dist/font
-s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
-es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+<../../results/fig/Rn_Rg_annual_vars.pdf, id=11, 505.89pt x 505.89pt>
+File: ../../results/fig/Rn_Rg_annual_vars.pdf Graphic file (type pdf)
 
-Output written on espm228_proj.pdf (1 page, 30286 bytes).
+<use ../../results/fig/Rn_Rg_annual_vars.pdf>
+Package pdftex.def Info: ../../results/fig/Rn_Rg_annual_vars.pdf used on input 
+line 72.
+(pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
+ [3 <../../results/fig/Rn_Rg_annual_vars.pdf>]
+<../../results/fig/Rn_Rg_radiation_partitioning.pdf, id=21, 505.89pt x 578.16pt
+>
+File: ../../results/fig/Rn_Rg_radiation_partitioning.pdf Graphic file (type pdf
+)
+ <use ../../results/fig/Rn_Rg_radiation_partitioning.pdf>
+Package pdftex.def Info: ../../results/fig/Rn_Rg_radiation_partitioning.pdf use
+d on input line 92.
+(pdftex.def)             Requested size: 469.75502pt x 536.87161pt.
+ [4]
+<../../results/fig/Rn_Rg_with_envelope.pdf, id=25, 505.89pt x 578.16pt>
+File: ../../results/fig/Rn_Rg_with_envelope.pdf Graphic file (type pdf)
+
+<use ../../results/fig/Rn_Rg_with_envelope.pdf>
+Package pdftex.def Info: ../../results/fig/Rn_Rg_with_envelope.pdf used on inpu
+t line 101.
+(pdftex.def)             Requested size: 469.75502pt x 536.87161pt.
+ [5 <../../results/fig/Rn_Rg_radiation_partitioning.pdf>] [6]
+Overfull \vbox (15.58951pt too high) has occurred while \output is active []
+
+
+[7 <../../results/fig/Rn_Rg_with_envelope.pdf>]
+<../../results/fig/G_fraction_annual_timeseries.pdf, id=217, 505.89pt x 505.89p
+t>
+File: ../../results/fig/G_fraction_annual_timeseries.pdf Graphic file (type pdf
+)
+ <use ../../results/fig/G_fraction_annual_timeseries.pdf>
+Package pdftex.def Info: ../../results/fig/G_fraction_annual_timeseries.pdf use
+d on input line 108.
+(pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
+
+<../../results/fig/G_fraction_vs_NDVI.pdf, id=218, 505.89pt x 505.89pt>
+File: ../../results/fig/G_fraction_vs_NDVI.pdf Graphic file (type pdf)
+
+<use ../../results/fig/G_fraction_vs_NDVI.pdf>
+Package pdftex.def Info: ../../results/fig/G_fraction_vs_NDVI.pdf used on input
+ line 120.
+(pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
+ [8 <../../results/fig/G_fraction_annual_timeseries.pdf>]
+<../../results/fig/G_fraction_vs_NDVI_veg_type.pdf, id=232, 505.89pt x 505.89pt
+>
+File: ../../results/fig/G_fraction_vs_NDVI_veg_type.pdf Graphic file (type pdf)
+
+ <use ../../results/fig/G_fraction_vs_NDVI_veg_type.pdf>
+Package pdftex.def Info: ../../results/fig/G_fraction_vs_NDVI_veg_type.pdf used
+ on input line 129.
+(pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
+ [9 <../../results/fig/G_fraction_vs_NDVI.pdf>] [10 <../../results/fig/G_fracti
+on_vs_NDVI_veg_type.pdf>] (./espm228_proj.aux) ) 
+Here is how much of TeX's memory you used:
+ 5476 strings out of 495028
+ 75989 string characters out of 6181498
+ 187127 words of memory out of 5000000
+ 8549 multiletter control sequences out of 15000+600000
+ 33529 words of font info for 52 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 44i,6n,41p,660b,237s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/
+fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/urw/time
+s/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on espm228_proj.pdf (10 pages, 399555 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 509 PDF objects out of 1000 (max. 8388607)
+ 475 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
