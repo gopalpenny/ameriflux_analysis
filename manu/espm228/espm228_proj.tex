@@ -94,7 +94,9 @@ Greater soil moisture likely leads to increased latent heat and soil heat fluxes
 To look at the relationship between Rn and Rg more closely, I plotted Rn/Rg versus surface water content (SWC1) using daily values from the growing season only, considerably reducing the variability in Rn/Rg at all sites.
 To obtain an upper bound estimate, I took the 0.8 quantile of Rn/Rg, and plotted this as the slope of a line through zero on Rn versus Rg plot, again containing only daytime fluxes from growing season.
 In this plot, the spread is largely eliminated.
-I included latent heat in the color of this plot.
+The slopes of the lines are, in order of increasing slope, 0.64 at Tonzi Ranch, 0.64 at Kendall Grassland, 0.70 at Santa Rita Mesquite Savanna, 0.71 at Mead Rainfed, 0.75 at Duke Hardwood Forest, 0.77 at Chestnut Ridge, and 0.82 at NC Loblolly Pine.
+The sites with more grass and shrubs have a smaller slope and the wetter, forested sites have a higher slope.
+I included latent heat in the color intensity of this plot.
 The points furthest from the line tend to have low latent heat, entailing a shift towards a maximum Rn/Rg ratio when LE is high.
 Lastly, I wanted to see if biomass production had an effect on the Rn/Rg relationship.
 The last plot in Figure~\ref{fig:env} shows a small negative correlation between Rn/Rg and NEE in the grassland and agriculture, but a small positive correlation in the forest.
@@ -129,7 +131,7 @@ There appears to be a local minimum when net carbon exchange (NEE) is at a maxim
 This peak coincides with the maximum NDVI (please note that the maximums on the plot are offset due to the legen shifting the NDVI plot to the left.
 
 Further investigating the relationship betwen G/Rn and NDVI, I directly plotted the two against each other in Figure~\ref{fig:G_ndvi} using data from seven Ameriflux sites.
-This plot illustrates a number of points.
+Daytime fluxes were extracted for every 16-day period to reduce the number of points in the figure.
 There appears to be an upper envelope on the soil heat flux fraction which decreases with NDVI. In other words, as more lease collect sunlight, there is a small soil heat flux. Additionally, all the forested sites (shown in triangles) have a small soil heat flux fraction than the other sites. There are some negative fractions in this case, which mostly occur at very low net radiation, suggesting a winter value and a heat flux from the soil to the surface even during the day.
 
 To separate the effects of vegetation type, I pulled all the forest sites and plotted them separately in Figure~\ref{fig:G_veg}, and the non-forest sites below.
@@ -169,8 +171,17 @@ It would appear that there is a positive correlation when Rn is small, and a neg
 
 \section{Discussion and suggested future work}
 
-Make Rn vs Rg plots for multiple years.
-Time-average fluxes over 16-day period to match NDVI (reduce daily variations, utilize more data instead of just days that coincide with 16-day period).
-Note that the 16-day period was chosen to reduce the number of points in the figure which already overlap to some degree.
+This analysis highlighted a number of properties of the relationships between net radiation and global shortwave radiation, as well as between soil heat flux fraction and NDVI.
+Both relationships are characterized by an upper limit that changes with the independent variable.
+Net radiation and global shortwave radiation, for instance are positively correlated and Rn/Rg rarely exceeds a site-specific maximum value regardless of the absolute value of Rg.
+The largest deviations from this line occur when latent heat is low, but there does not appear to be a uniform correlation between Rn/Rg and latent heat.
+The slopes of the envelope line is lowest at the grassland site and highest at the coniferous forest site.
+This makes sense given the low albedo of evergreen trees and high water availability at the NC Loblolly site.
+The grassland site, on the other hand, likely has higher albedo and less soil moisture, leading to increased reflection, surface heating, and more outgoing shortwave and longwave radiation.
+The net effect is a reduction in net radiation.
+
+Energy and water availability along with biomass play an important role in the fraction of net radiation transformed to soil heat flux. In areas that are dry with high radiation, there is less biomass, smaller latent heat fluxes, and often a greater soil heat flux fraction. In the forested sites that are wet and have high net radiation, the soil heat fluxes are very small. When comparing the soil heat flux fraction with NDVI, we observe an envelope on the upper limit of soil heat flux fraction that is inversely correlated with NDVI. This make sense because in some ways, NDVI is a proxy for net radiation, water availability, and biomass. The most interesting and perplexing piece of this plot to me is the upside-down "U" shape of the mead rainfed site. When NDVI is low, there is likely no biomass because the crops are not in season. Net radiation is also low, possibly due to reflection from snow or frost. As NDVI increases, there may be some increase in soil heat conductivity, or possibly non-productive plant matter that intercepts incoming radiation and converts it to sensible heat. At very high NDVI, the crops intercept incoming radiation and convert it to sensible or latent heat, resulting in a smaller soil heat flux fraction. Ignoring the agricultural area, there is a general decreasing trend in soil heat flux fraction with greater NDVI, likely entailing that a greater portion of energy is converted to latent heat or used for photosynthesis and carbon assimilation. In the forested sites, the soil heat flux fraction is small at all sites.
+
+While much can be learned from the plots provided in this report, further investigation could be done to better understand the processes. The relationship between net radiation and global radiation was considered for the year 2006, but more years could be included. In the relationship between soil heat flux and NDVI, it would be helpful to time-average fluxes over 16-day period to match NDVI measurements. This would reduce daily variations in the fluxes and utilize more data instead of just days that coincide with 16-day period.
 
 \end{document}
